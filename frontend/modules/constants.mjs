@@ -5,7 +5,7 @@ export const DEFAULT_BORDER_WIDTH = 5;
 
 export const BOARD_RESOLUTION = 100;
 export const BOARD_SCREEN_PERCENTAGE = 0.75;
-export const BOARD_SIZE = 49;
+export const BOARD_SIZE = 29;
 
 export const PLAYER_RADIUS = 10;
 export const PLAYER_MARGIN = 20;
