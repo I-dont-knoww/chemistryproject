@@ -35,7 +35,9 @@ class Question {
         checkAnswer.innerText = 'Check Answer';
         checkAnswer.onclick = async () => {
             checkAnswer.style.display = 'none';
-            resolve(await this.#answer(answer.value));
+
+            const correct = await this.#answer(answer.value, interactor);
+            resolve(correct);
         }
         container.appendChild(checkAnswer);
 
@@ -46,20 +48,43 @@ class Question {
      * @param {string} userAnswer
      * @returns {Promise<boolean>}
      */
-    async #answer(userAnswer) {
+    async #answer(userAnswer, interactor) {
         userAnswer = userAnswer.replaceAll('~', '');
-        const output = await (await fetch(SERVER_NAME, { method: 'POST', body: `${this.#question}~${userAnswer}` })).text();
 
-        return output.indexOf('true') >= 0;
+        try {
+            const output = await fetch(SERVER_NAME, { method: 'POST', body: `${this.#question}~${userAnswer}` });
+            if (!output.ok) throw new Error('failed to fetch answer');
+
+            const text = await output.text();
+
+            return text.indexOf('true') >= 0;
+        } catch (error) {
+            createErrorMessage(interactor);
+            throw error;
+        }
     }
+}
+
+function createErrorMessage(interactor) {
+    const errorMessage = document.createElement('p');
+    errorMessage.innerText = 'Failed to fetch.';
+    errorMessage.style.margin = '0 auto';
+    errorMessage.style.color = 'red';
+
+    interactor.appendChild(errorMessage);
 }
 
 export default {
     getSimpleQuestion: async function (interactor) {
-        const questionString = await(await fetch(`${SERVER_NAME}/simple`)).text();
+        try {
+            const questionString = await (await fetch(`${SERVER_NAME}/simple`)).text();
 
-        const question = new Question(questionString);
-        return await question.generateHTML(interactor);
+            const question = new Question(questionString);
+            return await question.generateHTML(interactor);
+        } catch (error) {
+            createErrorMessage(interactor);
+            throw error;
+        }
     },
 
     /**
@@ -67,10 +92,15 @@ export default {
      * @returns {Promise<boolean>}
      */
     getQuizQuestion: async function (interactor) {
-        const questionString = await (await fetch(`${SERVER_NAME}/quiz`)).text();
+        try {
+            const questionString = await (await fetch(`${SERVER_NAME}/quiz`)).text();
 
-        const question = new Question(questionString);
-        return await question.generateHTML(interactor);
+            const question = new Question(questionString);
+            return await question.generateHTML(interactor);
+        } catch (error) {
+            createErrorMessage(interactor);
+            throw error;
+        }
     },
 
     /**
@@ -78,9 +108,14 @@ export default {
      * @returns {Promise<boolean>}
      */
     getLabQuestion: async function (interactor) {
-        const questionString = await(await fetch(`${SERVER_NAME}/lab`)).text();
+        try {
+            const questionString = await (await fetch(`${SERVER_NAME}/lab`)).text();
 
-        const question = new Question(questionString);
-        return await question.generateHTML(interactor);
+            const question = new Question(questionString);
+            return await question.generateHTML(interactor);
+        } catch (error) {
+            createErrorMessage(interactor);
+            throw error;
+        }
     }
 };

@@ -13,10 +13,9 @@ export class StartScreen extends EmptyScreen {
 Up to four players may play the game.
 When the game begins, all players start at square zero.
 
-1. The current player answers a question to roll a dice. If they answer incorrectly, their turn will end and the next player's turn will begin.
-2. After the current player rolls the dice, they will move that many squares forward.
-3. Depending on the square they land on, they must answer a question as to not be moved backwards ${SQUARES_TO_MOVE_BACK} squares.
-4. If they answer incorrectly, they will be given an opportunity to avoid the punishment if they name ${ELEMENTS_TO_NAME} elements from the periodic table that haven't been named yet in this game session.
+1. The current player rolls the dice, they will move that many squares forward.
+2. Depending on the square they land on, they may have to answer a question as to not be moved backwards ${SQUARES_TO_MOVE_BACK} squares.
+3. If they answer incorrectly, they will be given an opportunity to avoid the punishment if they name ${ELEMENTS_TO_NAME} elements from the periodic table that haven't been named yet in this game session.
     `.trim();
 
     constructor() {
