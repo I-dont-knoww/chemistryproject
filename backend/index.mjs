@@ -4,7 +4,7 @@ import * as http from 'http'
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const MODEL = 'gemini-2.0-flash';
-const ALLOW_ACCESS = 'http://127.0.0.1:3000';
+const ALLOW_ACCESS = process.env.CORS;
 
 const COMMON_PROMPT = 'The response should not contain the character "~". The question should not require to be answered by drawing, graphing, or anything that can not be accomplished with just a keyboard. Do not provide the answer to the problem you generated. In the text input, there will more instructions and a history of all the problems you generated previously, all on separate lines. Try to create problems that are not the same as those that you have generated previously. There should not be any context required, ie. there should not be a "Which of the following..." in the generated question.';
 const SIMPLE_QUESTION_PROMPT = `Generate a SIMPLE one line AP Chemistry question. The question should not require the use of a calculator, and should be knowledge based.`;
@@ -113,7 +113,8 @@ async function checkQuestion(question, answer) {
 }
 
 http.createServer(async function (request, response) {
-    response.setHeader('Access-Control-Allow-Origin', ALLOW_ACCESS);
+    // response.setHeader('Access-Control-Allow-Origin', ALLOW_ACCESS);
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Content-Type', 'text/plain');
 
     if (request.method == 'GET') {
