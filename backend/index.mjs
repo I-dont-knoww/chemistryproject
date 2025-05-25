@@ -113,8 +113,8 @@ async function checkQuestion(question, answer) {
 }
 
 http.createServer(async function (request, response) {
-    // response.setHeader('Access-Control-Allow-Origin', ALLOW_ACCESS);
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Origin', ALLOW_ACCESS);
+    // response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Content-Type', 'text/plain');
 
     if (request.method == 'GET') {
