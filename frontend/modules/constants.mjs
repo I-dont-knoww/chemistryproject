@@ -21,4 +21,4 @@ export const SQUARES_TO_MOVE_BACK = 5;
 export const ELEMENTS_TO_NAME = 5;
 export const TIME_TO_NAME_ELEMENTS = 60;
 
-export const SERVER_NAME = 'https://chemistryproject.pages.dev/';
+export const SERVER_NAME = 'https://chemistryproject-xrnx.onrender.com';
