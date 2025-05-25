@@ -99,6 +99,8 @@ async function createLabQuestion() {
  * @returns {Promise<boolean>}
  */
 async function checkQuestion(question, answer) {
+    if (answer == '') return 'false';
+    
     const response = await ai.models.generateContent({
         model: MODEL,
         contents: `${question}\n${answer}`,

@@ -59,6 +59,18 @@
         .interface > * {
             flex: 1 1 0;
         }
+
+        .screen {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            padding: 1em;
+
+            border: 0.25em solid black;
+            background-color: white;
+        }
     </style>
 </head>
 
@@ -69,6 +81,7 @@
     <script type="module" src="modules/constants.mjs"></script>
     <script type="module" src="modules/dice.mjs"></script>
     <script type="module" src="modules/player.mjs"></script>
+    <script type="module" src="modules/screen.mjs"></script>
     <script type="module" src="modules/squares.mjs"></script>
     <script type="module" src="modules/util.mjs"></script>
 

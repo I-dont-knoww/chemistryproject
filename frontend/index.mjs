@@ -5,13 +5,16 @@ import PlayerManager from './modules/player.mjs';
 import Question from './modules/aiquestion.mjs';
 
 import { sleep } from './modules/util.mjs';
+import { StartScreen, EndScreen } from './modules/screen.mjs';
+
+const playerCount = await new StartScreen().playerCount;
 
 const canvas = new Canvas(document.querySelector('canvas'));
 const ui = document.querySelector('.interface');
 
 const board = Board.generateBoard([0.2, 0.4, 0.4]);
 const dice = new Dice(Dice.StandardValues, Dice.StandardWeights, ui);
-const players = new PlayerManager(4, ui);
+const players = new PlayerManager(playerCount, ui);
 
 function render() {
     canvas.ctx.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
@@ -39,7 +42,7 @@ async function mainGameLoop() {
         await sleep(500);
 
         // play animation to move player
-        await players.moveCurrentPlayer(distance);
+        const playerWon = await players.moveCurrentPlayer(distance);
         await sleep(250);
         dice.unhighlight();
 
@@ -47,6 +50,12 @@ async function mainGameLoop() {
         const currentSquare = board.squares[players.getCurrentPlayerPosition()];
         await currentSquare.onPlayerEnter(players);
         await sleep(250);
+
+        // finally check playerWon here so that they can answer potential quizzes
+        if (playerWon >= 0) {
+            onWin(playerWon);
+            return;
+        }
     } else {
         players.displayIncorrect();
         await sleep(1000);
@@ -55,6 +64,13 @@ async function mainGameLoop() {
     players.goToNextTurn();
 
     setTimeout(mainGameLoop, 0);
+}
+
+/**
+ * @param {number} playerWon
+ */
+function onWin(playerWon) {
+    new EndScreen(playerWon);
 }
 
 mainGameLoop();

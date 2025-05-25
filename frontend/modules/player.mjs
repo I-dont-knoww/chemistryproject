@@ -1,4 +1,4 @@
-import { PLAYER_GRID_SIZE, PLAYER_RADIUS, PLAYER_MARGIN, PLAYER_MOVE_DELAY, SQUARES_TO_MOVE_BACK } from './constants.mjs';
+import { PLAYER_GRID_SIZE, PLAYER_RADIUS, PLAYER_MARGIN, PLAYER_MOVE_DELAY, SQUARES_TO_MOVE_BACK, BOARD_SIZE } from './constants.mjs';
 import { Square } from './squares.mjs';
 
 import { sleep } from './util.mjs';
@@ -18,12 +18,17 @@ export default class PlayerManager {
 
     /**
      * @param {number} distance
+     * @returns {Promise<number>}
      */
     async moveCurrentPlayer(distance) {
         for (let i = 0; i < distance; i++) {
             this.#players[this.#playerTurn].position++;
             await sleep(PLAYER_MOVE_DELAY);
+
+            if (this.#players[this.#playerTurn].position == BOARD_SIZE - 1) return this.#playerTurn;
         }
+
+        return -1;
     }
 
     async punishCurrentPlayer() {

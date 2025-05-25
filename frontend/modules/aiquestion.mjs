@@ -33,7 +33,10 @@ class Question {
 
         const checkAnswer = document.createElement('button');
         checkAnswer.innerText = 'Check Answer';
-        checkAnswer.onclick = async () => resolve(await this.#answer(answer.value));
+        checkAnswer.onclick = async () => {
+            checkAnswer.style.display = 'none';
+            resolve(await this.#answer(answer.value));
+        }
         container.appendChild(checkAnswer);
 
         return promise;

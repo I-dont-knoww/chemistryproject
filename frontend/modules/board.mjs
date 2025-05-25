@@ -1,4 +1,4 @@
-import { BOARD_RESOLUTION, BOARD_SCREEN_PERCENTAGE } from './constants.mjs';
+import { BOARD_RESOLUTION, BOARD_SCREEN_PERCENTAGE, BOARD_SIZE } from './constants.mjs';
 import Canvas from './canvas.mjs';
 import PlayerManager from './player.mjs';
 import Squares, { Square } from './squares.mjs';
@@ -163,7 +163,7 @@ export default class Board {
     
 
     static generateBoard(weights) {
-        const squares = Array.from({ length: 48 }, () => getRandomWeightedValue(Object.values(Squares), weights));
+        const squares = Array.from({ length: BOARD_SIZE - 1 }, () => getRandomWeightedValue(Object.values(Squares), weights));
         return new Board([Squares.Basic].concat(squares));
     }
 }
