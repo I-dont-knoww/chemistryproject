@@ -57,9 +57,6 @@ async function createSimpleQuestion() {
         }
     });
 
-    console.log(`${COMMON_PROMPT}`);
-    console.log(`${SIMPLE_QUESTION_PROMPT} ${generateUnit()}\n${answerHistory.simple.join('\n')}`);
-
     updateAnswerHistory(response.text, 'simple');
     return response.text;
 }
