@@ -9,8 +9,7 @@ import { sleep } from './modules/util.mjs';
 const canvas = new Canvas(document.querySelector('canvas'));
 const ui = document.querySelector('.interface');
 
-// const board = Board.generateBoard([0.2, 0.4, 0.4]);
-const board = Board.generateBoard([0, 0, 1]);
+const board = Board.generateBoard([0.2, 0.4, 0.4]);
 const dice = new Dice(Dice.StandardValues, Dice.StandardWeights, ui);
 const players = new PlayerManager(4, ui);
 
